@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MakerSat - Student Designed Cubesat</title>
+    <title>Maker Cubed - Student Designed Cubesat</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -14,6 +14,59 @@
             background-color: #0a0a1a;
             color: #ffffff;
             font-family: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+        }
+
+        .site-header {
+            width: min(1200px, calc(100% - 1.5rem));
+            left: 50%;
+            top: 1rem;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, rgba(7, 10, 24, 0.92), rgba(20, 28, 48, 0.78));
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(148, 163, 184, 0.24);
+            border-radius: 9999px;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .site-header.scrolled {
+            background: linear-gradient(135deg, rgba(7, 10, 24, 0.98), rgba(10, 14, 30, 0.9));
+            box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45);
+        }
+
+        .site-nav-link {
+            color: rgba(241, 245, 249, 0.9);
+            transition: color 180ms ease, opacity 180ms ease;
+        }
+
+        .site-nav-link:hover {
+            color: #7dd3fc;
+        }
+
+        .hero-shell {
+            position: relative;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 1) 14%, rgba(0, 0, 0, 1) 100%);
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 1) 14%, rgba(0, 0, 0, 1) 100%);
+        }
+
+        .hero-shell::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10, 10, 26, 0.08) 0%, rgba(10, 10, 26, 0.24) 52%, rgba(10, 10, 26, 0.88) 100%);
+            pointer-events: none;
+        }
+
+        .hero-copy {
+            position: relative;
+            z-index: 1;
+            transition: opacity 180ms linear, transform 180ms linear, filter 180ms linear;
+            will-change: opacity, transform, filter;
+        }
+
+        .page-fade {
+            will-change: opacity, transform, filter;
+            transition: opacity 180ms linear, transform 180ms linear, filter 180ms linear;
         }
 
         .glass-effect {
@@ -35,7 +88,7 @@
         .carousel img { width: 100%; height: 360px; object-fit: cover; display: block; }
 
         /* Menu button */
-        #menu-btn { position: fixed; top: 18px; right: 18px; z-index: 60; }
+        #menu-btn { position: static; z-index: 60; }
         #mobile-menu { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(10,10,20,0.92), rgba(5,5,10,0.96)); display: none; z-index: 55; }
         #mobile-menu.open { display: block; }
 
@@ -47,59 +100,64 @@
 <body>
 
     <!-- Header & Navigation -->
-    <header class="fixed top-0 left-0 right-0 z-50">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-white">MakerSat</a>
-            <div class="hidden md:flex space-x-6">
-                <a href="#about" class="hover:text-indigo-400">About</a>
-                <a href="#mission" class="hover:text-indigo-400">Mission</a>
-                <a href="#team" class="hover:text-indigo-400">Team</a>
-                <a href="#partners" class="hover:text-indigo-400">Partners</a>
-                <a href="#hardware" class="hover:text-indigo-400">Hardware</a>
-                <a href="#software" class="hover:text-indigo-400">Software</a>
-                <a href="#contact" class="hover:text-indigo-400">Contact</a>
+    <header class="site-header fixed z-50">
+        <nav class="mx-auto flex items-center justify-between gap-4 px-5 py-3 md:px-6">
+            <a href="#" class="flex items-baseline gap-3 text-white">
+                <span class="text-2xl font-bold tracking-tight">Maker<sup class="align-super text-[0.65em] leading-none">3</sup></span>
+                <span class="hidden sm:inline text-[0.62rem] uppercase tracking-[0.35em] text-indigo-200/80">Maker Cubed</span>
+            </a>
+            <!-- Menu button for small screens (same button toggles open/close) -->
+            <button id="menu-btn" class="md:hidden ml-auto icon-btn text-white self-center" aria-label="Toggle menu" aria-expanded="false">
+                <i class="fa fa-bars"></i>
+            </button>
+            <div class="hidden md:flex space-x-6 text-sm font-semibold">
+                <a href="#about" class="site-nav-link">About</a>
+                <a href="#mission" class="site-nav-link">Mission</a>
+                <a href="#team" class="site-nav-link">Team</a>
+                <a href="#partners" class="site-nav-link">Partners</a>
+                <a href="#hardware" class="site-nav-link">Hardware</a>
+                <a href="#software" class="site-nav-link">Software</a>
+                <a href="#contact" class="site-nav-link">Contact</a>
             </div>
         </nav>
-        <!-- Menu button for small screens (same button toggles open/close) -->
-        <button id="menu-btn" class="md:hidden icon-btn text-white" aria-label="Toggle menu" aria-expanded="false">
-            <i class="fa fa-bars"></i>
-        </button>
-        <div id="mobile-menu" class="md:hidden" aria-hidden="true">
-            <div class="p-8">
-                <nav class="flex flex-col gap-4 text-xl">
-                    <a href="#about" class="mobile-link">About</a>
-                    <a href="#mission" class="mobile-link">Mission</a>
-                    <a href="#team" class="mobile-link">Team</a>
-                    <a href="#partners" class="mobile-link">Partners</a>
-                    <a href="#hardware" class="mobile-link">Hardware</a>
-                    <a href="#software" class="mobile-link">Software</a>
-                    <a href="#contact" class="mobile-link">Contact</a>
-                </nav>
-            </div>
-        </div>
     </header>
 
+    <div id="mobile-menu" class="md:hidden" aria-hidden="true">
+        <div class="p-8">
+            <nav class="flex flex-col gap-4 text-xl">
+                <a href="#about" class="mobile-link">About</a>
+                <a href="#mission" class="mobile-link">Mission</a>
+                <a href="#team" class="mobile-link">Team</a>
+                <a href="#partners" class="mobile-link">Partners</a>
+                <a href="#hardware" class="mobile-link">Hardware</a>
+                <a href="#software" class="mobile-link">Software</a>
+                <a href="#contact" class="mobile-link">Contact</a>
+            </nav>
+        </div>
+    </div>
+
     <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center text-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');">
-        <div>
-            <h1 class="text-5xl md:text-7xl font-extrabold text-white">MakerSat</h1>
-            <p class="text-xl md:text-2xl mt-4 text-indigo-200">A Student-Designed CubeSat Mission</p>
+    <section class="hero-shell page-fade min-h-screen flex items-center justify-center text-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');">
+        <div class="hero-copy px-6 max-w-4xl">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white">Maker<sup class="align-super text-[0.65em] leading-none">3</sup></h1>
+            <p class="text-xl md:text-2xl mt-4 text-indigo-200">Maker Cubed | A Student-Designed CubeSat Mission</p>
+            <p class="mt-4 text-sm md:text-base text-slate-300">A project by Fremont Student Makers, a nonprofit student organization.</p>
         </div>
         <div class="float-blob left-8 top-1/4 w-48 h-48 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-full"></div>
         <div class="float-blob right-12 bottom-20 w-64 h-64 bg-gradient-to-r from-blue-400 to-green-300 rounded-full"></div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20">
+    <section id="about" class="page-fade py-20">
         <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12">About MakerSat</h2>
+            <h2 class="text-4xl font-bold text-center mb-12">About Maker Cubed</h2>
             <div class="flex flex-col md:flex-row items-center gap-12">
                 <div class="md:w-1/2">
                     <img src="images/hardware2.png" alt="Cubesat" class="rounded-lg shadow-lg">
                 </div>
                 <div class="md:w-1/2">
                     <p class="text-lg leading-relaxed">
-                        MakerSat is a student-led initiative to design, build, and launch a CubeSat into orbit. Our goal is to provide a hands-on learning experience for students interested in space technology and engineering. 
+                        Maker Cubed is a student-led initiative by Fremont Student Makers, a nonprofit student organization, to design, build, and launch a CubeSat into orbit. Our goal is to provide a hands-on learning experience for students interested in space technology and engineering. 
                     </p>
                 </div>
             </div>
@@ -107,39 +165,39 @@
     </section>
 
     <!-- Mission Section -->
-    <section id="mission" class="py-20 bg-gray-900/50 glass-effect">
+    <section id="mission" class="page-fade py-20 bg-gray-900/50 glass-effect">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">Our Mission</h2>
             <p class="max-w-3xl mx-auto text-lg text-center leading-relaxed">
-                Our primary mission is to democratize space by providing students with the opportunity to send their own experiments into orbit. MakerSat will be a testbed for students experiments, allowing them to collect data and conduct research in a real space environment.
+                Our primary mission is to democratize space by providing students with the opportunity to send their own experiments into orbit. Maker Cubed will be a testbed for student experiments, allowing them to collect data and conduct research in a real space environment.
             </p>
         </div>
     </section>
 
     <!-- Partnership / Launch Partners -->
-    <section id="partners" class="py-20 bg-gradient-to-r from-indigo-900/30 to-gray-900/10 glass-effect">
+    <section id="partners" class="page-fade py-20 bg-gradient-to-r from-indigo-900/30 to-gray-900/10 glass-effect">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12 fade-in">Launch Partners</h2>
-            <p class="text-center max-w-2xl mx-auto mb-8 fade-in">We are grateful to our launch and integration partners who support MakerSat's mission.</p>
+            <p class="text-center max-w-2xl mx-auto mb-8 fade-in">We are grateful to our launch and integration partners who support Maker Cubed's mission.</p>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 items-center">
-                <div class="flex flex-col items-center justify-center p-6 bg-gray-800/30 rounded-lg">
+                <a href="https://lothanspace.com/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-6 bg-gray-800/30 rounded-lg transition-transform duration-200 hover:-translate-y-1 hover:bg-gray-800/50">
                     <img src="images/LothanSpaceLogo.png" alt="Lothan Space logo" class="h-16 object-contain mb-3">
                     <div class="text-white font-semibold">Lothan Space</div>
-                </div>
-                <div class="flex flex-col items-center justify-center p-6 bg-gray-800/30 rounded-lg">
+                </a>
+                <a href="https://www.istellartech.com/en" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-6 bg-gray-800/30 rounded-lg transition-transform duration-200 hover:-translate-y-1 hover:bg-gray-800/50">
                     <img src="images/ISTlogo.svg" alt="Interstellar Technologies logo" class="h-16 object-contain mb-3">
                     <div class="text-white font-semibold">Interstellar Technologies</div>
-                </div>
-                <div class="flex flex-col items-center justify-center p-6 bg-gray-800/30 rounded-lg">
+                </a>
+                <a href="https://ihsmakers.fremontstudentmakers.org/" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-6 bg-gray-800/30 rounded-lg transition-transform duration-200 hover:-translate-y-1 hover:bg-gray-800/50">
                     <img src="images/ihsmakerclublogo.png" alt="IHS Maker Club logo" class="h-16 object-contain mb-3">
                     <div class="text-white font-semibold">IHS Maker Club</div>
-                </div>
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Team Section -->
-    <section id="team" class="py-20">
+    <section id="team" class="page-fade py-20">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">Our Team</h2>
             <p class="max-w-3xl mx-auto text-lg text-center leading-relaxed mb-12">
@@ -169,7 +227,7 @@
     </section>
 
     <!-- Hardware Section -->
-    <section id="hardware" class="py-20 bg-gray-900/20 glass-effect">
+    <section id="hardware" class="page-fade py-20 bg-gray-900/20 glass-effect">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-8 fade-in">Hardware</h2>
             <div class="flex flex-col md:flex-row items-center gap-8">
@@ -194,7 +252,7 @@
     </section>
 
     <!-- Software / Electronics Section -->
-    <section id="software" class="py-20">
+    <section id="software" class="page-fade py-20">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-8 fade-in">Software & Electronics</h2>
             <div class="grid md:grid-cols-2 gap-8">
@@ -230,7 +288,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-900/50 glass-effect">
+    <section id="contact" class="page-fade py-20 bg-gray-900/50 glass-effect">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">Contact Us</h2>
             <div class="max-w-lg mx-auto">
@@ -254,14 +312,14 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
+    <footer class="page-fade bg-gray-900 text-white py-8">
         <div class="container mx-auto px-6 text-center">
             <div class="flex justify-center space-x-6 mb-4">
                 <a href="https://twitter.com/makersat" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
                 <a href="https://instagram.com/makersat" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
                 <a href="https://facebook.com/makersat" target="_blank" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
             </div>
-            <p>&copy; 2026 MakerSat. All Rights Reserved.</p>
+            <p>&copy; 2026 Fremont Student Makers. 501(c) Nonprofit. EIN: 39-2874617</p>
         </div>
     </footer>
 
@@ -270,6 +328,8 @@
         (function(){
             const menuBtn = document.getElementById('menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
+            const header = document.querySelector('.site-header');
+            const pageFades = Array.from(document.querySelectorAll('.page-fade'));
             if (!menuBtn || !mobileMenu) return;
             function setOpen(open){
                 mobileMenu.classList.toggle('open', open);
@@ -279,6 +339,28 @@
             menuBtn.addEventListener('click', ()=> setOpen(!mobileMenu.classList.contains('open')));
             // close when clicking any mobile link
             document.querySelectorAll('.mobile-link').forEach(a => a.addEventListener('click', ()=> setOpen(false)));
+
+            function updateHeaderState(){
+                const scrollY = window.scrollY || 0;
+                const isCompact = window.innerWidth < 768;
+                if (header) header.classList.toggle('scrolled', scrollY > 24);
+                pageFades.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    const fadeStart = isCompact ? 180 : 280;
+                    const fadeEnd = isCompact ? -40 : -80;
+                    const maxShift = isCompact ? 8 : 14;
+                    const maxBlur = isCompact ? 0.5 : 1.5;
+                    const progress = Math.min(Math.max((rect.bottom - fadeEnd) / (fadeStart - fadeEnd), 0), 1);
+                    const opacityFloor = isCompact ? 0.28 : 0;
+                    el.style.opacity = Math.max(opacityFloor, progress).toFixed(3);
+                    el.style.transform = `translateY(${(1 - progress) * maxShift}px)`;
+                    el.style.filter = `blur(${(1 - progress) * maxBlur}px)`;
+                });
+            }
+
+            window.addEventListener('scroll', updateHeaderState, { passive: true });
+            window.addEventListener('resize', updateHeaderState);
+            updateHeaderState();
         })();
 
         // Generic carousel initializer for every .carousel
